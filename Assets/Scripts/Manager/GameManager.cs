@@ -2,17 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
-    // Start is called before the first frame update
-    void Start()
+    public Character character { get; private set; }
+
+    protected override void Awake()
     {
-        
+        base.Awake();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        SetData();
+    }
+
+    private void SetData()
+    {
+        character = new Character("Slime", 2, 1000, 20, 15, 100, 5);
+        UIManager.Instance.UpdateAllUI(character);
     }
 }

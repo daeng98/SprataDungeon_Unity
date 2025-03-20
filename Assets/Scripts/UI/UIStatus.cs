@@ -1,18 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIStatus : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private TextMeshProUGUI attackText;
+    [SerializeField] private TextMeshProUGUI defenseText;
+    [SerializeField] private TextMeshProUGUI healthText;
+    [SerializeField] private TextMeshProUGUI criticalText;
+    [SerializeField] private Button exit;
+
+    private void Start()
     {
-        
+        exit.onClick.AddListener(() => UIManager.Instance.ToggleStatusUI());
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UpdateUI(Character player)
     {
-        
+        attackText.text = player.Attack.ToString();
+        defenseText.text = player.Defense.ToString();
+        healthText.text = player.Health.ToString();
+        criticalText.text = player.Critical.ToString();
     }
 }
