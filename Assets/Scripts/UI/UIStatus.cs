@@ -19,9 +19,9 @@ public class UIStatus : MonoBehaviour
 
     public void UpdateUI(Character player)
     {
-        attackText.text = $"<size=30>Attack</size>\n<size=50>{player.Attack}</size>";
-        defenseText.text = $"<size=30>Defense</size>\n<size=50>{player.Defense}</size>";
-        healthText.text = $"<size=30>Health</size>\n<size=50>{player.Health}</size>";
-        criticalText.text = $"<size=30>Critical</size>\n<size=50>{player.Critical}</size>";
+        attackText.text = $"<size=30>공격력</size>\n<size=50>{player.Attack}</size>";
+        defenseText.text = $"<size=30>방어력</size>\n<size=50>{player.Defense}</size>";
+        healthText.text = $"<size=30>체력</size>\n<size=50>{player.Health}</size>";
+        criticalText.text = $"<size=30>크리티컬</size>\n<size=50>{player.Critical}</size>";
     }
 }
