@@ -19,9 +19,9 @@ public class UIStatus : MonoBehaviour
 
     public void UpdateUI(Character player)
     {
-        attackText.text = player.Attack.ToString();
-        defenseText.text = player.Defense.ToString();
-        healthText.text = player.Health.ToString();
-        criticalText.text = player.Critical.ToString();
+        attackText.text = $"<size=30>Attack</size>\n<size=50>{player.Attack}</size>";
+        defenseText.text = $"<size=30>Defense</size>\n<size=50>{player.Defense}</size>";
+        healthText.text = $"<size=30>Health</size>\n<size=50>{player.Health}</size>";
+        criticalText.text = $"<size=30>Critical</size>\n<size=50>{player.Critical}</size>";
     }
 }
