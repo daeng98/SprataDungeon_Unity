@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
+using static Item;
 
 public class UISlot : MonoBehaviour
 {
@@ -21,29 +24,26 @@ public class UISlot : MonoBehaviour
     // 아이템 설정
     public void SetItem(Item newItem)
     {
-        Debug.Log($"SetItem 실행");
         itemData = newItem;
 
         if (itemIcon != null)
         {
             itemIcon.sprite = newItem.icon; // 아이콘 연결
             itemIcon.enabled = true; // 아이콘 활성화
-            Debug.Log($"{newItem.name} 아이콘 적용 완료"); // 로그 추가
         }
         else
         {
-            Debug.LogWarning("아이콘이 연결되지 않음!"); // 아이콘이 없을 경우 경고 로그
+            Debug.LogWarning("아이콘이 연결되지 않음"); // 아이콘이 없을 경우 경고 로그
         }
 
         if (itemButton != null)
         {
             itemButton.onClick.RemoveAllListeners();
             itemButton.onClick.AddListener(OnSlotClick); // 버튼 클릭 이벤트 추가
-            Debug.Log($"{newItem.name} 버튼 클릭 이벤트 등록 완료"); // 로그 추가
         }
         else
         {
-            Debug.LogWarning("버튼이 연결되지 않음!"); // 버튼이 없을 경우 경고 로그
+            Debug.LogWarning("버튼이 연결되지 않음");
         }
 
         RefreshUI();

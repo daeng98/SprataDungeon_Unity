@@ -12,8 +12,14 @@ public class UIStatus : MonoBehaviour
     [SerializeField] private TextMeshProUGUI criticalText;
     [SerializeField] private Button exit;
 
+    private Character character;
+
     private void Start()
     {
+        character = GameManager.Instance.character;
+        character.OnStatsChanged += () => UpdateUI(character);
+        UpdateUI(character);
+
         exit.onClick.AddListener(() => UIManager.Instance.ToggleStatusUI());
     }
 

@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 using static Item;
 
@@ -16,19 +18,18 @@ public class UIInventory : MonoBehaviour
 
     public int inventorySize = 20;
 
-    private void Awake()
-    {
-        InitInventoryUI();
-    }
-
     private void Start()
     {
         exit.onClick.AddListener(() => UIManager.Instance.ToggleInventoryUI());
     }
 
+    private void OnEnable()
+    {
+        SetInventoryItems(GameManager.Instance.allItems);
+    }
+
     public void InitInventoryUI()
     {
-        Debug.Log($"InitInventoryUI È£ÃâµÊ! inventorySize: {inventorySize}");
         for (int i = 0; i < inventorySize; i++)
         {
             GameObject newSlot = Instantiate(slotPrefab, slotParent);
@@ -42,15 +43,15 @@ public class UIInventory : MonoBehaviour
 
     public void SetInventoryItems(List<Item> inventoryItems)
     {
-        Debug.Log("SetInventoryItems È£ÃâµÊ!");
-        Debug.Log($"inventoryItems.Count: {inventoryItems.Count}");
-        Debug.Log($"slotList.Count: {slotList.Count}");
+        if (slotList == null || slotList.Count == 0)
+        {
+            InitInventoryUI();
+        }
 
         RefreshAllSlots();
 
         for (int i = 0; i < inventoryItems.Count && i < slotList.Count; i++)
         {
-            Debug.Log($"for¹® ÁøÀÔ");
             if (inventoryItems[i] == null)
             {
                 Debug.Log($"inventoryItems[{i}]°¡ nullÀÔ´Ï´Ù.");
@@ -58,7 +59,6 @@ public class UIInventory : MonoBehaviour
             else
             {
                 slotList[i].SetItem(inventoryItems[i]);
-                Debug.Log($"½½·Ô {i}¿¡ {inventoryItems[i].name} Ãß°¡µÊ");
             }
         }
     }
@@ -76,13 +76,14 @@ public class UIInventory : MonoBehaviour
         if (newItem == null) return;
 
         // °°Àº Å¸ÀÔÀÇ ¾ÆÀÌÅÛÀÌ ÀåÂøµÇ¾î ÀÖ´Ù¸é ¸ÕÀú ÇØÁ¦
-        if (equippedItems.ContainsKey(newItem.itemType))
-        {
+        if (equippedItems.ContainsKey(newItem.itemType))    
             UnequipItem(equippedItems[newItem.itemType]);
-        }
 
-        equippedItems[newItem.itemType] = newItem; // ¾ÆÀÌÅÛ ÀåÂø
-        Debug.Log($"{newItem.name} ÀåÂø ¿Ï·á");
+        if (CanEquip(newItem))
+        {
+            equippedItems[newItem.itemType] = newItem; // ¾ÆÀÌÅÛ ÀåÂø
+            ApplyItemStats(newItem, true);
+        }
 
         RefreshAllSlots(); // ¸ðµç ½½·Ô UI °»½Å
     }
@@ -90,11 +91,31 @@ public class UIInventory : MonoBehaviour
     public void UnequipItem(Item item)
     {
         if (item == null || !equippedItems.ContainsKey(item.itemType)) return;
-
-        equippedItems.Remove(item.itemType); // ÀåÂø ÇØÁ¦
-        Debug.Log($"{item.name} ÀåÂø ÇØÁ¦");
+        {
+            equippedItems.Remove(item.itemType); // ÀåÂø ÇØÁ¦
+            ApplyItemStats(item, false);
+        }
 
         RefreshAllSlots(); // ¸ðµç ½½·Ô UI °»½Å
+    }
+
+    private void ApplyItemStats(Item item, bool isEquipping)
+    {
+        var character = GameManager.Instance.character;
+        int modifier = isEquipping ? 1 : -1;
+
+        Dictionary<ItemType, Action> stat = new Dictionary<ItemType, Action>
+        {
+        { ItemType.Attack, () => character.Attack += item.statValue * modifier },
+        { ItemType.Defense, () => character.Defense += item.statValue * modifier },
+        { ItemType.Health, () => character.Health += item.statValue * modifier },
+        { ItemType.Critical, () => character.Critical += item.statValue * modifier }
+    };
+
+        if (stat.TryGetValue(item.itemType, out Action applyStat))
+        {
+            applyStat();
+        }
     }
 
     public Item GetEquippedItem(ItemType type)

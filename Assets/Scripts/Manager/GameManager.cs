@@ -5,9 +5,9 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     [SerializeField] public UIInventory uiInventory;
-    [SerializeField] private List<Item> allItems;
+    [SerializeField] public List<Item> allItems;
 
-    public Character character { get; private set; }
+    public Character character { get; set; }
 
     protected override void Awake()
     {
@@ -17,8 +17,8 @@ public class GameManager : Singleton<GameManager>
     private void Start()
     {
         SetData();
+        uiInventory.InitInventoryUI();
         uiInventory.SetInventoryItems(allItems);
-        Debug.Log("SetInventoryItems »£√‚µ !");
     }
 
     private void SetData()

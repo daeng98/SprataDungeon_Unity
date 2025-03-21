@@ -16,3 +16,4 @@ MonoBehaviour:
   icon: {fileID: 6674386295937086461, guid: 7abd59d488ec3484089d5f418816dbdb, type: 3}
   description: "\uB3C4\uB07C\uC785\uB2C8\uB2E4"
   itemType: 0
+  statValue: 4
