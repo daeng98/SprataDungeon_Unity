@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-    [SerializeField] private UIInventory uiInventory;
+    [SerializeField] public UIInventory uiInventory;
     [SerializeField] private List<Item> allItems;
 
     public Character character { get; private set; }
@@ -18,6 +18,7 @@ public class GameManager : Singleton<GameManager>
     {
         SetData();
         uiInventory.SetInventoryItems(allItems);
+        Debug.Log("SetInventoryItems »£√‚µ !");
     }
 
     private void SetData()

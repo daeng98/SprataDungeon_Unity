@@ -6,7 +6,7 @@ public class UIManager : Singleton<UIManager>
 {
     [SerializeField] private UIMainMenu mainMenu;
     [SerializeField] private UIStatus status;
-    [SerializeField] private UIInventory inven;
+    [SerializeField] public UIInventory inven;
     [SerializeField] private GameObject buttons;
 
     private bool isStatusOpen = false;

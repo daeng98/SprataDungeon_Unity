@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using static Item;
 
 public class UIInventory : MonoBehaviour
 {
@@ -10,18 +12,23 @@ public class UIInventory : MonoBehaviour
     [SerializeField] private Button exit;
 
     public List<UISlot> slotList = new List<UISlot>();
-    private Item equippedItem;
+    private Dictionary<ItemType, Item> equippedItems = new Dictionary<ItemType, Item>();
 
     public int inventorySize = 20;
 
-    private void Start()
+    private void Awake()
     {
         InitInventoryUI();
+    }
+
+    private void Start()
+    {
         exit.onClick.AddListener(() => UIManager.Instance.ToggleInventoryUI());
     }
 
     public void InitInventoryUI()
     {
+        Debug.Log($"InitInventoryUI 호출됨! inventorySize: {inventorySize}");
         for (int i = 0; i < inventorySize; i++)
         {
             GameObject newSlot = Instantiate(slotPrefab, slotParent);
@@ -35,39 +42,64 @@ public class UIInventory : MonoBehaviour
 
     public void SetInventoryItems(List<Item> inventoryItems)
     {
-        RefreshAllSlots(); // 모든 슬롯 초기화
+        Debug.Log("SetInventoryItems 호출됨!");
+        Debug.Log($"inventoryItems.Count: {inventoryItems.Count}");
+        Debug.Log($"slotList.Count: {slotList.Count}");
 
-        for (int i = 0; i < inventoryItems.Count; i++)
+        RefreshAllSlots();
+
+        for (int i = 0; i < inventoryItems.Count && i < slotList.Count; i++)
         {
-            if (inventoryItems[i] != null) // 아이템 데이터가 존재하는 경우만 추가
+            Debug.Log($"for문 진입");
+            if (inventoryItems[i] == null)
+            {
+                Debug.Log($"inventoryItems[{i}]가 null입니다.");
+            }
+            else
             {
                 slotList[i].SetItem(inventoryItems[i]);
+                Debug.Log($"슬롯 {i}에 {inventoryItems[i].name} 추가됨");
             }
         }
     }
 
-    public void AddItemToInventory(Item newItem)
+    public bool CanEquip(Item newItem)
     {
-        foreach (var slot in slotList)
-        {
-            if (slot.IsEmpty()) // 빈 슬롯 찾기
-            {
-                slot.SetItem(newItem); // 아이템 추가
-                RefreshAllSlots();
-                return;
-            }
-        }
+        if (newItem == null) return false;
+
+        // 같은 타입의 아이템이 이미 장착되어 있는지 확인
+        return !equippedItems.ContainsKey(newItem.itemType);
     }
 
     public void EquipItem(Item newItem)
     {
-        equippedItem = newItem; // 새로운 아이템 장착
-        RefreshAllSlots(); // UI 갱신
+        if (newItem == null) return;
+
+        // 같은 타입의 아이템이 장착되어 있다면 먼저 해제
+        if (equippedItems.ContainsKey(newItem.itemType))
+        {
+            UnequipItem(equippedItems[newItem.itemType]);
+        }
+
+        equippedItems[newItem.itemType] = newItem; // 아이템 장착
+        Debug.Log($"{newItem.name} 장착 완료");
+
+        RefreshAllSlots(); // 모든 슬롯 UI 갱신
     }
 
-    public Item GetEquippedItem()
+    public void UnequipItem(Item item)
     {
-        return equippedItem;
+        if (item == null || !equippedItems.ContainsKey(item.itemType)) return;
+
+        equippedItems.Remove(item.itemType); // 장착 해제
+        Debug.Log($"{item.name} 장착 해제");
+
+        RefreshAllSlots(); // 모든 슬롯 UI 갱신
+    }
+
+    public Item GetEquippedItem(ItemType type)
+    {
+        return equippedItems.ContainsKey(type) ? equippedItems[type] : null;
     }
 
     public void RefreshAllSlots()
