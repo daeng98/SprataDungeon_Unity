@@ -26,7 +26,7 @@ public class GameManager : Singleton<GameManager>
 
     private void SetData()
     {
-        character = new Character("슬라임", 0, 1000, 10, 10, 100, 5);
+        character = new Character("슬라임", 0, 0, 10, 10, 100, 5);
         UIManager.Instance.UpdateAllUI(character);
     }
 
@@ -36,6 +36,7 @@ public class GameManager : Singleton<GameManager>
         {
             yield return new WaitForSeconds(addTime);
             character.AddExperience(2);
+            character.plusGold(100);
             UIManager.Instance.mainMenu.UpdateUI(character);
         }
     }

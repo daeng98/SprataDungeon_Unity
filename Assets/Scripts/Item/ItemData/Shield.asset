@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 07ecb07cea19884489e11f31b04c6424, type: 3}
-  m_Name: NewItem 2
+  m_Name: Shield
   m_EditorClassIdentifier: 
-  itemName: "\uCD08\uB85D \uC0AC\uACFC"
-  icon: {fileID: -6367837219966448765, guid: 375a132719b8f114aadcfda6bf62f8b1, type: 3}
-  description: "\uCD08\uB85D \uC0AC\uACFC\uC785\uB2C8\uB2E4. \uCCB4\uB825\uC774 \uC0C1\uC2B9\uD569\uB2C8\uB2E4."
-  itemType: 2
-  statValue: 4
+  itemName: "\uBC29\uD328"
+  icon: {fileID: -6717884257390833292, guid: 6f2409c812e59e04fb9d2af0715bea80, type: 3}
+  description: "\uBC29\uD328\uC785\uB2C8\uB2E4. \uBC29\uC5B4\uB825\uC774 \uC0C1\uC2B9\uD569\uB2C8\uB2E4."
+  itemType: 1
+  statValue: 5

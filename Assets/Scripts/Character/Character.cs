@@ -113,16 +113,19 @@ public class Character
     public void plusGold(int amount)
     {
         Gold += amount;
+        OnStatsChanged?.Invoke();
     }
 
     public void LevelUp()
     {
         Experience -= ExpToNextLevel;
         Level++;
+
         attack += 1;
         defense += 1;
         health += 10;
         critical += 1;
-        Debug.Log($"레벨업 현재 레벨: {Level} (칭호: {Title})");
+
+        OnStatsChanged?.Invoke();
     }
 }
