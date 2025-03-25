@@ -423,3 +423,4 @@ MonoBehaviour:
   itemIcon: {fileID: 7765844087526203308}
   itemButton: {fileID: 6592135507784822975}
   equippedMark: {fileID: 1001748694644476905}
+  tooltip: {fileID: 0}

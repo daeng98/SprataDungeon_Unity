@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static Item;
+using static UnityEditor.Progress;
 
-public class UISlot : MonoBehaviour
+public class UISlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Image itemIcon;  // 아이템 이미지
     [SerializeField] private Button itemButton;
@@ -15,6 +15,12 @@ public class UISlot : MonoBehaviour
 
     private Item itemData; // 해당 슬롯의 아이템 정보
     private UIInventory inventory;
+    public UITooltip tooltip;
+
+    private void Start()
+    {
+        tooltip = FindObjectOfType<UITooltip>();
+    }
 
     public void SetInventory(UIInventory inven)
     {
@@ -85,5 +91,18 @@ public class UISlot : MonoBehaviour
     public bool IsEmpty()
     {
         return itemData == null; // 아이템이 없으면 빈 슬롯
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (itemData != null)
+        {
+            tooltip.ShowTooltip(itemData);
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        tooltip.HideTooltip();
     }
 }
