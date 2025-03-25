@@ -9,6 +9,8 @@ public class GameManager : Singleton<GameManager>
 
     public Character character { get; set; }
 
+    public float addTime = 5f;
+
     protected override void Awake()
     {
         base.Awake();
@@ -17,13 +19,24 @@ public class GameManager : Singleton<GameManager>
     private void Start()
     {
         SetData();
+        StartCoroutine(AddExp());
         uiInventory.InitInventoryUI();
         uiInventory.SetInventoryItems(allItems);
     }
 
     private void SetData()
     {
-        character = new Character("Slime", 2, 1000, 20, 15, 100, 5);
+        character = new Character("ΩΩ∂Û¿”", 0, 1000, 10, 10, 100, 5);
         UIManager.Instance.UpdateAllUI(character);
+    }
+
+    private IEnumerator AddExp()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(addTime);
+            character.AddExperience(2);
+            UIManager.Instance.mainMenu.UpdateUI(character);
+        }
     }
 }

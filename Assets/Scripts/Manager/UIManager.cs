@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UIManager : Singleton<UIManager>
 {
-    [SerializeField] private UIMainMenu mainMenu;
+    [SerializeField] public UIMainMenu mainMenu;
     [SerializeField] private UIStatus status;
     [SerializeField] public UIInventory inven;
     [SerializeField] private GameObject buttons;

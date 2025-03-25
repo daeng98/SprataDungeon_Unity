@@ -10,6 +10,10 @@ public class Character
     public string Name { get;  set; }
     public int Level { get;  set; }
     public int Gold { get;  set; }
+    public int Experience { get; private set; }
+    public int ExpToNextLevel => Level * 10;
+
+    public string Title => GetTitle(Level);
 
     private int attack;
     private int defense;
@@ -65,10 +69,34 @@ public class Character
         Name = name;
         Level = level;
         Gold = gold;
+        Experience = 0;
         Attack = attack;
         Defense = defense;
         Health = health;
         Critical = critical;
+    }
+
+    private string GetTitle(int level)
+    {
+        if (level >= 10) return "전설";
+        if (level >= 7) return "영웅";
+        if (level >= 5) return "숙련";
+        if (level >= 3) return "평범";
+        if (level >= 1) return "초보";
+        return "null";
+    }
+
+    public void AddExperience(int amount)
+    {
+        Experience += amount;
+        Debug.Log($"경험치 획득: {amount} (현재 경험치: {Experience} / {ExpToNextLevel})");
+
+        if (Experience >= ExpToNextLevel)
+        {
+            LevelUp();
+        }
+
+        OnStatsChanged?.Invoke();
     }
 
     public void plusGold(int amount)
@@ -78,6 +106,12 @@ public class Character
 
     public void LevelUp()
     {
+        Experience -= ExpToNextLevel;
         Level++;
+        attack += 1;
+        defense += 1;
+        health += 10;
+        critical += 1;
+        Debug.Log($"레벨업 현재 레벨: {Level} (칭호: {Title})");
     }
 }
