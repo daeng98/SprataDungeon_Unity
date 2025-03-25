@@ -2458,6 +2458,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   titleText: {fileID: 109523705}
+  infoText: {fileID: 1246176341}
   playerNameText: {fileID: 24339978}
   levelText: {fileID: 1612870882}
   goldText: {fileID: 720515778}
@@ -3266,7 +3267,7 @@ GameObject:
   - component: {fileID: 1246176342}
   - component: {fileID: 1246176341}
   m_Layer: 5
-  m_Name: Info
+  m_Name: InfoText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

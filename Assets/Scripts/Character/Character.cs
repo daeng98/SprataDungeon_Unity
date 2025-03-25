@@ -14,6 +14,7 @@ public class Character
     public int ExpToNextLevel => Level * 10;
 
     public string Title => GetTitle(Level);
+    public string Info => GetInfo(Level);
 
     private int attack;
     private int defense;
@@ -83,7 +84,17 @@ public class Character
         if (level >= 5) return "숙련";
         if (level >= 3) return "평범";
         if (level >= 1) return "초보";
-        return "null";
+        return "뉴비";
+    }
+
+    private string GetInfo(int level)
+    {
+        if (level >= 10) return "전설적인 모험가 입니다.";
+        if (level >= 7) return "영웅적인 모험가 입니다.";
+        if (level >= 5) return "어느정도 숙련된 모험가 입니다.";
+        if (level >= 3) return "초보 딱지를 땐 평범한 모험가 입니다.";
+        if (level >= 1) return "이제 걸음마를 땐 초보 모험가 입니다.";
+        return "이제 막 시작한 뉴비 입니다.";
     }
 
     public void AddExperience(int amount)
