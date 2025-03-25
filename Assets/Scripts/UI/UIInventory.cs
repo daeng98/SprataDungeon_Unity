@@ -118,6 +118,15 @@ public class UIInventory : MonoBehaviour
         }
     }
 
+    public int GetBonusStat(ItemType type)
+    {
+        if (equippedItems.TryGetValue(type, out Item item))
+        {
+            return item.statValue;
+        }
+        return 0;
+    }
+
     public Item GetEquippedItem(ItemType type)
     {
         return equippedItems.ContainsKey(type) ? equippedItems[type] : null;

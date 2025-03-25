@@ -15,7 +15,7 @@ public class UIManager : Singleton<UIManager>
     public void UpdateAllUI(Character player)
     {
         mainMenu.UpdateUI(player);
-        status.UpdateUI(player);
+        status.UpdateUI(player, inven);
     }
 
     public void ToggleStatusUI()
