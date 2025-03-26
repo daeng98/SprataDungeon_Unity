@@ -8,10 +8,10 @@
 
 
 ### 구현 사항
-1. 메인 화면 구성   
-2. Status 보기
-3. Inventory 보기
-+ 캐릭터 생성 화면
+1. 캐릭터 생성 화면
+2. 메인 화면 구성   
+3. Status 보기
+4. Inventory 보기
 
  
 
@@ -30,6 +30,8 @@
 
 
 레벨에 따라 칭호와 텍스트가 바뀌게 됩니다.
+
+
 ![image](https://github.com/user-attachments/assets/42859454-f34e-46e7-b012-973831000e3d)
 
 
