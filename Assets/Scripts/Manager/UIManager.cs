@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class UIManager : Singleton<UIManager>
 {
+    [SerializeField] private UICreate create;
     [SerializeField] public UIMainMenu mainMenu;
     [SerializeField] private UIStatus status;
     [SerializeField] public UIInventory inven;
+    [SerializeField] private UITooltip tooltip;
+    [SerializeField] private UISlot slot;
     [SerializeField] private GameObject buttons;
 
     private bool isStatusOpen = false;
@@ -16,6 +19,12 @@ public class UIManager : Singleton<UIManager>
     {
         mainMenu.UpdateUI(player);
         status.UpdateUI(player, inven);
+    }
+
+    public void ShowMainUI()
+    {
+        create.gameObject.SetActive(false);
+        mainMenu.gameObject.SetActive(true);
     }
 
     public void ToggleStatusUI()
